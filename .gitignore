@@ -1,0 +1,10 @@
+/launcher.gen
+PKGBUILD.gen
+src/
+pkg/
+*.zst
+*.log
+*.jar
+gen
+*.xml
+logs/

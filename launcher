@@ -1,0 +1,34 @@
+#!/bin/sh
+# Example launcher
+set -ex
+VERSION=$1
+if test -z "$VERSION"; then
+	echo "Usage: launcher <version>"
+	exit 64
+fi
+
+# Implement your Yggdrasil client here.
+export auth_player_name=Steve
+export auth_uuid=12345             
+export auth_access_token=12345
+
+export JVM_ARGS="-Xmx8192m -Duser.home=null"
+export version_name=xxx
+export game_directory=~/Minecraft
+export launcher_name=Shell          
+export launcher_version=Alex
+export user_type=mojang
+export version_type=release
+export assets_root=$game_directory/assets/$VERSION
+
+source /usr/share/java/minecraft/$VERSION/launcher.gen
+
+mkdir -p $assets_root
+mkdir -p $assets_root/skin
+ln -s /usr/share/minecraft/assets/$assets_index_name/objects $assets_root/objects || true
+ln -s /usr/share/minecraft/assets/$assets_index_name/indexes $assets_root/indexes || true
+
+exec /usr/lib/jvm/java-17-openjdk/bin/java \
+        $JVM_ARGS \
+        $MAIN_CLASS \
+        $MC_ARGS

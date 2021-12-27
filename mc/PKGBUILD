@@ -1,0 +1,52 @@
+# Maintainer: YuutaW <YuutaW@ymc.moe>
+. ../PKGBUILD.gen
+pkgname=minecraft-${_MC_ID}
+pkgver=${_MC_ID//-/_}
+pkgrel=1
+epoch=
+pkgdesc="Minecraft ${_MC_ID}"
+arch=(x86_64)
+url="https://minecraft.net/"
+license=('custom')
+depends=("java-environment>=$_JAVA_VERSION")
+makedepends=()
+optdepends=("minecraft-assets-${_ASSET_ID//-/_}: Minecraft assets (built-in sounds, extra resource packs, etc)")
+install=
+source=(launcher.gen ${_MC_ID}.jar::$_MC_CLIENT_URL $_MC_JAR_URL $_MC_EXTRACT_JAR_URL $_MC_LOG4J_URL)
+sha1sums=('SKIP' $_MC_CLIENT_SHA1 $_MC_JAR_SHA1 $_MC_EXTRACT_JAR_SHA1 $_MC_LOG4J_SHA1)
+noextract=(launcher.gen ${_MC_ID}.jar $_MC_JAR $_MC_EXTRACT_JAR $_MC_LOG4J)
+# Prevents lwjgl from complaining sha mismatches
+options=(!strip)
+
+_dir=/usr/share/java/minecraft/$pkgver/
+
+prepare() {
+	cd $srcdir
+	echo "natives_directory=\"${_dir}native/\"" > launcher.gen.add
+	printf "classpath=\"" >> launcher.gen.add
+	for jar in `echo $_MC_JAR`; do
+		printf "%s/%s:" $_dir $jar >> launcher.gen.add
+	done
+	echo "$_dir/${_MC_ID}.jar\"" >> launcher.gen.add
+
+	sed -e "s/LOG4J_XML_PATH/\/usr\/share\/java\/minecraft\/$pkgver\/$_LOG4J_FILE/" $srcdir/launcher.gen > launcher.gen.mod
+
+	cat launcher.gen.mod >> launcher.gen.add
+}
+
+package() {
+	cd $srcdir
+	_dir="$pkgdir/$_dir"
+	mkdir -p $_dir
+	cp $_MC_JAR ${_MC_ID}.jar $_dir
+	if test -n "$_MC_LOG4J"; then
+		cp $_MC_LOG4J $_dir
+	fi
+	cp launcher.gen.add $_dir/launcher.gen
+	mkdir -p $_dir/native/
+	cd $_dir/native/
+	for jar in `echo $_MC_EXTRACT_JAR`; do
+		bsdtar -xf $srcdir/$jar
+	done
+	rm -rf META-INF
+}

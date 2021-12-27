@@ -1,0 +1,35 @@
+# Maintainer: YuutaW <YuutaW@ymc.moe>
+. ../PKGBUILD.gen
+pkgname=minecraft-assets-${_ASSET_ID}
+pkgver=${_ASSET_ID//-/_}
+pkgrel=1
+epoch=
+pkgdesc="Minecraft assets ${_ASSET_ID}"
+arch=(any)
+url="https://minecraft.net/"
+license=('custom')
+install=
+source=($_MC_ASSET_URL $_MC_ASSET_INDEX_URL)
+sha1sums=($_MC_ASSET_SHA1 $_MC_ASSET_INDEX_SHA1)
+noextract=($_MC_ASSET $_MC_ASSET_INDEX)
+
+_dir=/usr/share/minecraft/assets/$pkgver
+
+package() {
+	_dir="$pkgdir/$_dir"
+	mkdir -p $_dir/
+	cd $_dir/
+	mkdir objects
+	cd objects
+	for asset in `echo $_MC_ASSET`; do
+		local _ha="${asset:0:2}"
+		mkdir -p ./$_ha
+		cp $srcdir/$asset ./$_ha/
+	done
+	cd ..
+	mkdir indexes
+	cd indexes
+	for index in `echo $_MC_ASSET_INDEX`; do
+		cp $srcdir/$index ./
+	done
+}

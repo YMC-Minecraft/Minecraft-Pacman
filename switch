@@ -1,0 +1,6 @@
+#!/bin/sh
+if test -z "$1"; then
+	echo "Usage: switch <Minecraft version>"
+fi
+cc -D_POSIX_C_SOURCE=200809L -std=c99 -ljson-c -lcurl -o gen gen.c
+./gen -v "$1"
