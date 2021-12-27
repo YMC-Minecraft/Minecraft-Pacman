@@ -23,11 +23,7 @@ _dir=/usr/share/java/minecraft/$pkgver/
 prepare() {
 	cd $srcdir
 	echo "natives_directory=\"${_dir}native/\"" > launcher.gen.add
-	printf "classpath=\"" >> launcher.gen.add
-	for jar in `echo $_MC_JAR`; do
-		printf "%s/%s:" $_dir $jar >> launcher.gen.add
-	done
-	echo "$_dir/${_MC_ID}.jar\"" >> launcher.gen.add
+	echo "classpath=\$(find $_dir -name '*.jar' | tr '\n' ':')" >> launcher.gen.add
 
 	sed -e "s/LOG4J_XML_PATH/\/usr\/share\/java\/minecraft\/$pkgver\/$_LOG4J_FILE/" $srcdir/launcher.gen > launcher.gen.mod
 

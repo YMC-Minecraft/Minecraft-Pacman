@@ -1,0 +1,31 @@
+# Maintainer: YuutaW <YuutaW@ymc.moe>
+. ../PKGBUILD.gen
+pkgname=minecraft-fabric-${_MC_ID}
+pkgver=${_FABRIC//-/_}
+pkgrel=1
+epoch=
+pkgdesc="Fabric for Minecraft ${_MC_ID}"
+arch=(x86_64)
+url="https://fabricmc.net/"
+license=('custom')
+depends=("java-environment>=$_JAVA_VERSION" "minecraft-${_MC_ID}")
+makedepends=()
+optdepends=()
+install=
+source=(launcher.fabric.gen $_MC_FABRIC_JAR_URL)
+sha1sums=('SKIP' $_MC_FABRIC_JAR_SHA1)
+noextract=(launcher.fabric.gen $_MC_FABRIC_JAR)
+
+_dir=/usr/share/java/minecraft/${_MC_ID//-/_}/
+
+prepare() {
+	cd $srcdir
+}
+
+package() {
+	cd $srcdir
+	_dir="$pkgdir/$_dir"
+	mkdir -p $_dir
+	cp $_MC_FABRIC_JAR $_dir
+	cp launcher.fabric.gen $_dir/launcher.fabric.gen
+}

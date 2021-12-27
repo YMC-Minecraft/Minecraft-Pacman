@@ -22,6 +22,9 @@ export version_type=release
 export assets_root=$game_directory/assets/$VERSION
 
 source /usr/share/java/minecraft/$VERSION/launcher.gen
+if test -e /usr/share/java/minecraft/$VERSION/launcher.fabric.gen; then
+	source /usr/share/java/minecraft/$VERSION/launcher.fabric.gen
+fi
 
 mkdir -p $assets_root
 mkdir -p $assets_root/skin

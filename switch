@@ -1,6 +1,11 @@
 #!/bin/sh
+set -e
 if test -z "$1"; then
 	echo "Usage: switch <Minecraft version>"
 fi
 cc -D_POSIX_C_SOURCE=200809L -std=c99 -ljson-c -lcurl -o gen gen.c
 ./gen -v "$1"
+#FABRIC_VERSION=$(curl -s "https://meta.fabricmc.net/v2/versions/loader" | jq -r ".[0].version")
+#./gen -m "https://meta.fabricmc.net/v2/versions/loader/$1/$FABRIC_VERSION/profile/json" -c -o PKGBUILD.fabric.gen -O launcher.fabric.gen
+#echo "_FABRIC_ID=\"$FABRIC_VERSION\"" >> PKGBUILD.fabric.gen
+#sed -i "/^ID.*$/d" launcher.fabric.gen

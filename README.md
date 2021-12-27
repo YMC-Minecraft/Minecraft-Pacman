@@ -16,6 +16,8 @@ This repository does not contain any launchers. Instead, it exposes some variabl
 
 3. (Optional) Build and install the assets package: `cd assets; makepkg`
 
+4. (Optional) Build and install the fabric package: `cd fabric; makepkg`
+
 Whenever you need to build a different Minecraft version, do the steps again (changing the arguments of `./switch` will cause it to generate new build files).
 
 ## Tested versions
@@ -28,9 +30,13 @@ Whenever you need to build a different Minecraft version, do the steps again (ch
 
 Basic testing for 1.14, 1.15 and 1.16 (no assets)
 
-## TODO
+1.15 with Fabric
 
-Fabric support
+## Fabric
+
+After install the `minecraft-fabric-xxx` package, you will have Fabric jars in the same directory as Minecraft jars, and they will be added to the classpath (but not used). If you want to use Fabric, source the `launcher.fabric.gen` after sourcing `launcher.gen`. It will set necessary environment variables (e.g. `MAIN_CLASS`) for you.
+
+## TODO
 
 Forge support
 
@@ -39,6 +45,8 @@ Forge support
 Assets folders cannot be shared across versions (i.e. you must have a dedicated assets folder for each asset version).
 
 Library compatibility issues with version <= 1.12: Inconsistency detected by ld.so: dl-lookup.c: 105: check_match: Assertion `version->filename == NULL || ! _dl_name_match_p (version->filename, map)' failed!
+
+Compatibility with legacy versions that do not include `-cp` in their manifest.
 
 ## License
 
