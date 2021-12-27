@@ -14,12 +14,12 @@ export auth_access_token=12345
 
 export JVM_ARGS="-Xmx8192m -Duser.home=null"
 export version_name=xxx
-export game_directory=~/Minecraft
-export launcher_name=Shell          
+export game_directory=~/Minecraft/$VERSION/
+export launcher_name=Shell
 export launcher_version=Alex
 export user_type=mojang
 export version_type=release
-export assets_root=$game_directory/assets/$VERSION
+export assets_root=$game_directory/assets/
 
 source /usr/share/java/minecraft/$VERSION/launcher.gen
 if test -e /usr/share/java/minecraft/$VERSION/launcher.fabric.gen; then
