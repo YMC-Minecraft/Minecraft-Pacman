@@ -24,7 +24,8 @@ Whenever you need to build a different Minecraft version, do the steps again (ch
 
 | MC        | Assets | Fabric | Working |
 |-----------|--------|--------|---------|
-| 1.18      | Y      | N      | Y       |
+| 1.18.1    | Y      | Y      | Y       |
+| 1.18      | Y      | Y      | Y       |
 | 1.17.1    | Y      | Y      | Y       |
 | 1.17      | Y      | N      | Y       |
 | 1.16      | N      | N      | Y       |
