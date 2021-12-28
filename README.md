@@ -22,19 +22,18 @@ Whenever you need to build a different Minecraft version, do the steps again (ch
 
 ## Tested versions
 
-1.18
-
-1.17
-
-1.13
-
-1.12
-
-rd-132211
-
-Basic testing for 1.14, 1.15 and 1.16 (no assets)
-
-1.15 with Fabric
+| MC        | Assets | Fabric | Working |
+|-----------|--------|--------|---------|
+| 1.18      | Y      | N      | Y       |
+| 1.17.1    | Y      | Y      | Y       |
+| 1.17      | Y      | N      | Y       |
+| 1.16      | N      | N      | Y       |
+| 1.15      | N      | Y      | Y       |
+| 1.14      | N      | N      | Y       |
+| 1.13      | Y      | N      | Y       |
+| 1.12      | Y      | N      | Y       |
+| 1.8       | Y      | N      | Y       |
+| rd-132211 | Y      | N      | Y       |
 
 Note that for versions <= 1.12, you need Java 8 instead.
 
