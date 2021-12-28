@@ -26,6 +26,22 @@ if test -e /usr/share/java/minecraft/$VERSION/launcher.fabric.gen; then
 	source /usr/share/java/minecraft/$VERSION/launcher.fabric.gen
 fi
 
+# For old versions
+# https://stackoverflow.com/a/8811800
+contains() {
+	string="$1"
+	substring="$2"
+	if test "${string#*$substring}" != "$string"
+	then
+		return 0
+	else
+		return 1
+	fi
+}
+
+contains "$JVM_ARGS" "-cp" || JVM_ARGS="$JVM_ARGS -cp ${classpath}"
+contains "$JVM_ARGS" "-Djava.library.path=" || JVM_ARGS="$JVM_ARGS -Djava.library.path=${natives_directory}"
+
 mkdir -p $assets_root
 mkdir -p $assets_root/skin
 ln -s /usr/share/minecraft/assets/$assets_index_name/objects $assets_root/objects || true
