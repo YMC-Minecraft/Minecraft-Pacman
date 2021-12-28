@@ -31,6 +31,8 @@ mkdir -p $assets_root/skin
 ln -s /usr/share/minecraft/assets/$assets_index_name/objects $assets_root/objects || true
 ln -s /usr/share/minecraft/assets/$assets_index_name/indexes $assets_root/indexes || true
 
+# For 1.12 and below, use this line instead:
+# exec /usr/lib/jvm/java-8-openjdk/jre/bin/java \
 exec /usr/lib/jvm/java-17-openjdk/bin/java \
         $JVM_ARGS \
         $MAIN_CLASS \

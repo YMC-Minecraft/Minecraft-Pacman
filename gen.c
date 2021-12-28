@@ -188,8 +188,8 @@ static void append(FILE *stream, const char *key, const char *value) {
             value);
 }
 
-static void arg(const char jvm, const char *value) {
-    if (strchr(value, ' ')) {
+static void arg(const char jvm, const char *value, const char allow_space) {
+    if (!allow_space && strchr(value, ' ')) {
         fprintf(stderr, "Warn: Refusing argument with space: %s\n", value);
         return;
     }
@@ -325,7 +325,7 @@ static void parse_arguments(struct json_object *obj) {
     for (unsigned int i = 0; i < args_len; i++) {
         json_object *item = json_object_array_get_idx(args, i);
         if (json_object_is_type(item, json_type_string)) {
-            arg(0, json_object_get_string(item));
+            arg(0, json_object_get_string(item), 0);
             continue;
         }
         if (!json_object_is_type(item, json_type_object)) {
@@ -361,7 +361,7 @@ static void parse_arguments(struct json_object *obj) {
     for (unsigned int i = 0; i < args_len; i++) {
         json_object *item = json_object_array_get_idx(args, i);
         if (json_object_is_type(item, json_type_string)) {
-            arg(1, json_object_get_string(item));
+            arg(1, json_object_get_string(item), 0);
             continue;
         }
         if (!json_object_is_type(item, json_type_object)) {
@@ -383,24 +383,25 @@ static void parse_arguments(struct json_object *obj) {
             if (!rule) continue;
             if (rule == 2) {
                 if (json_object_is_type(value, json_type_string)) {
-                    arg(2, json_object_get_string(value));
+                    arg(2, json_object_get_string(value), 0);
                 } else {
                     for (unsigned int j = 0; j < value_len; j++) {
                         arg(2,
                                json_object_get_string(
                                        json_object_array_get_idx(value, j)
-                               ));
+                               ),
+                               0);
                     }
                 }
             } else {
                 if (json_object_is_type(value, json_type_string)) {
-                    arg(1, json_object_get_string(value));
+                    arg(1, json_object_get_string(value), 0);
                 } else {
                     for (unsigned int j = 0; j < value_len; j++) {
                         arg(1,
                                json_object_get_string(
                                        json_object_array_get_idx(value, j)
-                               ));
+                               ), 0);
                     }
                 }
             }
@@ -591,7 +592,7 @@ static void fetch_version(const char *url, const char is_fabric) {
     if (json_object_object_get_ex(json, "arguments", &obj)) {
         parse_arguments(obj);
     } else if (json_object_object_get_ex(json, "minecraftArguments", &obj)) {
-        arg(0, json_object_get_string(obj));
+        arg(0, json_object_get_string(obj), 1 /* Allow */);
     } else {
         cleanup();
         errx(1, "Invalid version.json: No arguments or minecraftArguments object.");
@@ -623,7 +624,7 @@ static void fetch_version(const char *url, const char is_fabric) {
                         "Unsupported Log4J Configuration: %s",
                         (char *) json_object_get_string(a));
             } else {
-                arg(1, "-Dlog4j.configurationFile=LOG4J_XML_PATH");
+                arg(1, "-Dlog4j.configurationFile=LOG4J_XML_PATH", 1 /* Disable check */);
             }
         }
     }

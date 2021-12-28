@@ -28,9 +28,15 @@ Whenever you need to build a different Minecraft version, do the steps again (ch
 
 1.13
 
+1.12
+
+rd-132211
+
 Basic testing for 1.14, 1.15 and 1.16 (no assets)
 
 1.15 with Fabric
+
+Note that for versions <= 1.12, you need Java 8 instead.
 
 ## Fabric
 
@@ -40,13 +46,17 @@ After install the `minecraft-fabric-xxx` package, you will have Fabric jars in t
 
 Forge support
 
+Rewrite argument processing
+
+Provide a JSON as well
+
 ## Known issues
 
 Assets folders cannot be shared across versions (i.e. you must have a dedicated assets folder for each asset version).
 
-Library compatibility issues with version <= 1.12: Inconsistency detected by ld.so: dl-lookup.c: 105: check_match: Assertion `version->filename == NULL || ! _dl_name_match_p (version->filename, map)' failed!
-
 Compatibility with legacy versions that do not include `-cp` in their manifest.
+
+Some arguments are not supported.
 
 ## License
 
