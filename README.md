@@ -29,7 +29,7 @@ Whenever you need to build a different Minecraft version, do the steps again (ch
 | 1.17      | Y      | N      | Y       |
 | 1.16      | N      | N      | Y       |
 | 1.15      | N      | Y      | Y       |
-| 1.14      | N      | N      | Y       |
+| 1.14      | Y      | Y      | Y       |
 | 1.13      | Y      | N      | Y       |
 | 1.12      | Y      | N      | Y       |
 | 1.8       | Y      | N      | Y       |
